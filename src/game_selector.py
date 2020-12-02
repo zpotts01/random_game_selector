@@ -6,10 +6,18 @@ from src.read_game_list import read_games
 
 if __name__ == "__main__":
     fpath = os.path.join("data", "game_list.csv")
-    print("File Path: {}".format(fpath))
-    # Testing write
-    game_list = ["The Elder Scrolls V: Skyrim", "Fallout 4", "Forza Horizon 4"]
-    write_games(fpath, game_list)
-    time.sleep(5)
-    # Testing read
-    check_games = read_games(fpath)
+    list_of_games = []
+    game_in = input("Please enter the name of a game:\n")
+    while game_in.lower() != "q":
+        list_of_games.append(game_in)
+        print("Added {} to the list!" .format(game_in))
+        game_in = input("Please enter the name of a game:\n")
+
+    print("Thank you for the list of games!")
+    print("Here is the list:\n{}" .format(list_of_games))
+    edit = input("Would you like to add or remove any games from the list? (Y/N)\n")
+    if edit.lower() != "n":
+        choice = input("Would you like to add or remove a game? (A/R)\n")
+        while choice.lower() not in ["a", "r"]:
+            print("Oy!")
+            choice = input("Would you like to add or remove a game? (A/R)\n")
