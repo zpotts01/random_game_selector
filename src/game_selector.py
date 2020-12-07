@@ -4,7 +4,7 @@ import time
 
 
 class GameSelector:
-    version = 0.0
+    version = 0.1
     fpath = os.path.join("data", "game_list.csv")
     list_of_games = []
 
@@ -34,29 +34,46 @@ class GameSelector:
                 else:
                     file.write("{},".format(game))
 
+    def select_operation(self):
+        options = ["a", "r", "p", "q"]
+        choice = input("add(a) - remove(r)\nshow list(p) - quit(q)\nPlease select an option from the menu above:\n")
+        choice = choice.lower()
+        while choice.lower() not in options:
+            choice = input("add(a) - remove(r)\nshow list(p) - quit(q)\nPlease select an option from the menu above:\n")
+            choice = choice.lower()
+        if choice == "q":
+            print("Quitting...")
+            return
+        elif choice == "a":
+            print("add ")
+
     def __str__(self):
         rtn_str = ""
-        if len(self.list_of_games) < 11:
-            for i in range(0, len(self.list_of_games)):
-                rtn_str += "{}: {}\n".format(i + 1, self.list_of_games[i])
+        if len(self.list_of_games) == 0:
+            rtn_str += "There are no games to display...\n"
         else:
-            half_1 = self.list_of_games[:len(self.list_of_games)//2]
-            half_2 = self.list_of_games[len(self.list_of_games)//2:]
-            for i in range(0, len(self.list_of_games)//2):
-                rtn_str += "{}: {}{}|  {}: {}\n" .format(i+1, half_1[i], " "*(37 - len(half_1[i])), i +
-                                                         (len(self.list_of_games)//2 + 1), half_2[i])
+            if len(self.list_of_games) < 11:
+                for i in range(0, len(self.list_of_games)):
+                    rtn_str += "{}: {}\n".format(i + 1, self.list_of_games[i])
+            else:
+                half_1 = self.list_of_games[:len(self.list_of_games) // 2]
+                half_2 = self.list_of_games[len(self.list_of_games) // 2:]
+                for i in range(0, len(self.list_of_games) // 2):
+                    rtn_str += "{}: {}{}|  {}: {}\n".format(i + 1, half_1[i], " " * (37 - len(half_1[i])), i +
+                                                            (len(self.list_of_games) // 2 + 1), half_2[i])
         return rtn_str
 
 
 if __name__ == "__main__":
-    print("This program randomly selects a game from your provided list of games.\n"
-          "It is designed to help you decide what to play when you are short on time and can't make up your mind!\n")
     game_selector = GameSelector()
+    print("This program randomly selects a game from your provided list of games.\n"
+          "It is designed to help you decide what to play when you are short on time and can't make up your mind!\n"
+          "Version:", game_selector.version, "\n")
+
     game_selector.read_games()
     game_list = game_selector.get_list_of_games()
-    if len(game_list) > 0:
-        print("Here is the current list of games:")
-        print(game_selector)
+    print("Here is the current list of games:")
+    print(game_selector)
 
     # game_in = input("Please enter the name of a game ('q' to quit):\n")
     # while game_in.lower() != "q":
